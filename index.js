@@ -63,7 +63,7 @@ function turingMachineSimuration(tapeOrigin,stateTransitionTable){  // シュミ
     console.log(tape +"   [status:"+statement+"]");
     console.log(" ^");
 
-    while(!(statement===STATEMENT_ACCEPT || statement===STATEMENT_REJECT)){
+    while(!(statement===STATEMENT_ACCEPT) && !(statement===STATEMENT_REJECT)){
         [tape,tapeHead,statement] 
             = stateTransition(stateTransitionTable,tape,tapeHead,statement);
 
