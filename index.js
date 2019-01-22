@@ -52,7 +52,6 @@ function stateTransition(stateTransitionTable,tape,tapeHead,statement){ // 状�
     
 }
 
-
 function turingMachineSimuration(tapeOrigin,stateTransitionTable){  // シュミレータ本体
     let tape = `_${tapeOrigin}_`;   //テープの左右を空白(_)として追加
     let tapeHead = 1;               //ヘッドの初期位置
@@ -60,17 +59,13 @@ function turingMachineSimuration(tapeOrigin,stateTransitionTable){  // シュミ
 
     const tapeLog=[[tape,tapeHead,statement]]; //テープとヘッドと状態を時系列に記録
 
-    console.log(tape +"   [status:"+statement+"]");
-    console.log(" ^");
+    printTapeAndState(tape,statement,tapeHead);
 
     while(!(statement===STATEMENT_ACCEPT) && !(statement===STATEMENT_REJECT)){
         [tape,tapeHead,statement] 
             = stateTransition(stateTransitionTable,tape,tapeHead,statement);
 
-        console.log(tape +"   [status:"+statement+"]");
-        let text="";
-        for(;text.length<tapeHead;text = text + " ");
-        console.log(text+"^");
+        printTapeAndState(tape,statement,tapeHead);
 
         //受理されない場合
             // LOOP テープ、ヘッド、状態が過去の少なくともある一時点と一致したら、ループなので受理されない。
@@ -96,5 +91,12 @@ function turingMachineSimuration(tapeOrigin,stateTransitionTable){  // シュミ
             return 0;
         }
     }
+}
+
+function printTapeAndState(tape,statement,tapeHead){
+    console.log(tape +"   [status:"+statement+"]");
+    let text="";
+    for(;text.length<tapeHead;text = text + " ");
+    console.log(text+"^");
 }
 
