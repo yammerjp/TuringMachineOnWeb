@@ -8,8 +8,10 @@
 <!--    <link rel="shortcut icon" href="media/favicon.ico">-->
     </head>
     <body>
-This is TuringMachineSimulator.
-Please write state transition function like CSV.
+
+<p>This is TuringMachineSimulator.</p>
+<div>first tape:<input type="text" id="tapeText"></div>
+<div>state transition(like CSV):
 <textarea id="StateTransitionText">q_0,0,q_1,A,L
 q_0,1,q_0,1,R
 q_0,A,q_0,A,R
@@ -31,7 +33,7 @@ q_3,_,q_0,_,R
 q_4,1,q_reject,1,S
 q_4,A,q_4,A,L
 q_4,B,q_4,B,L
-q_4,_,q_accept,_,R</textarea>
+q_4,_,q_accept,_,R</textarea></div>
 <button onclick="startCalc();">start</button>
 
     <script src="index.js"></script>
