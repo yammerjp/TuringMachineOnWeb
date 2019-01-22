@@ -11,8 +11,9 @@
 
 <p>This is TuringMachineSimulator.</p>
 <div>first tape:<input type="text" id="tapeText"></div>
-<div>state transition(like CSV):
-<textarea id="StateTransitionText">q_0,0,q_1,A,L
+<div>state transition(like CSV):</div>
+<div>[ 状態 , テープヘッドの値 , 遷移先の状態 , 書き換える値 , ヘッドの移動先 ]</div>
+<div><textarea id="StateTransitionText">q_0,0,q_1,A,L
 q_0,1,q_0,1,R
 q_0,A,q_0,A,R
 q_0,B,q_0,B,R
