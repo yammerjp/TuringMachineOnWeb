@@ -1,6 +1,7 @@
-const STATEMENT_INITIAL = "q_0";    //初期状態
-const STATEMENT_ACCEPT = "q_accept";//受理状態
-const STATEMENT_REJECT = "q_reject";//受理状態
+const HEAD_INITIAL_POSITION = 1; //ヘッドの初期位置
+const STATE_INITIAL = "q_0";    //初期状態
+const STATE_ACCEPT = "q_accept";//受理状態
+const STATE_REJECT = "q_reject";//受理状態
 const SEEK_DIRECTION_LEFT ="L";     //右への移動
 const SEEK_DIRECTION_RIGHT ="R";    //左への移動
 const SEEK_DIRECTION_STOP ="S";     //移動しない
@@ -37,66 +38,74 @@ function seek(directon){ // ヘッドの移動
     }
 }
 
-function stateTransition(stateTransitionTable,tape,tapeHead,statement){ // 状態遷移
+function stateTransition(stateTransitionTable,config){ // 状態遷移
     //        0    1         2       3                 4
     // delta=[状態,ヘッドの値,遷移状態,ヘッドの書き換え値,シーク方向]
     for(const delta of stateTransitionTable){
-        if(delta[0] == statement && delta[1]==tape[tapeHead]){
-            tape = tape.slice(0,tapeHead) + delta[3] + tape.slice(Number(tapeHead)+1)
-            tapeHead += seek(delta[4]);
-            statement = delta[2];
-            return [tape,tapeHead,statement];
+        if(delta[0] == config.state && delta[1]==config.tape[config.head]){
+            config.tape = config.tape.slice(0,config.head) + delta[3] + config.tape.slice(Number(config.head)+1)
+            config.head += seek(delta[4]);
+            config.state = delta[2];
+//            return config;
+            return;
         }
     }
-    return [tape,tapeHead,statement];
-    
+    //ここでチューリングマシンはストップするはず。
+    //現在の実装では、様相が全く変化しないことでループ検知が働いている。
+//    return config;
+    return;  
 }
 
 function turingMachineSimuration(tapeOrigin,stateTransitionTable){  // シュミレータ本体
-    let tape = `_${tapeOrigin}_`;   //テープの左右を空白(_)として追加
-    let tapeHead = 1;               //ヘッドの初期位置
-    let statement = STATEMENT_INITIAL; //初期状態
+    let config = new configuration(`_${tapeOrigin}_`,HEAD_INITIAL_POSITION,STATE_INITIAL);
 
-    const tapeLog=[[tape,tapeHead,statement]]; //テープとヘッドと状態を時系列に記録
+    const tapeLog= new Array();
+    tapeLog.push(Object.assign({},config));
 
-    printTapeAndState(tape,statement,tapeHead);
+    printTapeAndState(config);
 
-    while(!(statement===STATEMENT_ACCEPT) && !(statement===STATEMENT_REJECT)){
-        [tape,tapeHead,statement] 
-            = stateTransition(stateTransitionTable,tape,tapeHead,statement);
+    while(!(config.state===STATE_ACCEPT) && !(config.state===STATE_REJECT)){
+        stateTransition(stateTransitionTable,config);
 
-        printTapeAndState(tape,statement,tapeHead);
+        printTapeAndState(config);
 
         //受理されない場合
             // LOOP テープ、ヘッド、状態が過去の少なくともある一時点と一致したら、ループなので受理されない。
             // 遷移先が指定されずに停止した場合もここに含まれる。
-        for(const tape_past of tapeLog){
-            if(tape_past[0] == tape 
-                &&tape_past[1] == tapeHead
-                &&tape_past[2] == statement){
-                console.log("(!!REJECT!!) It is looped");
-                return 0;
-            }
+        const matchConfig = tapeLog.filter((pastConfig)=>{
+            return pastConfig.tape == config.tape 
+              &&pastConfig.head == config.head
+              &&pastConfig.state == config.state
+        });
+        if(matchConfig.length>0){
+            console.log("(!!WILL NOT STOP!!) It is looped. ");
+            return 0;
         }
-        tapeLog.push([tape,tapeHead,statement]);
+        tapeLog.push(Object.assign({},config));
         // 拒否状態
-        if(statement===STATEMENT_REJECT){
+        if(config.state===STATE_REJECT){
             console.log("(!!REJECT!!) It is rejected. ");
             return 0;
         }
 
         //受理される場合   
-        if(statement===STATEMENT_ACCEPT){
+        if(config.state===STATE_ACCEPT){
             console.log("(ACCEPT) It is accepted. ");
             return 0;
         }
     }
 }
 
-function printTapeAndState(tape,statement,tapeHead){
-    console.log(tape +"   [status:"+statement+"]");
+function printTapeAndState(config){ //様相を表示
+    console.log(config.tape +"   [status:"+config.state+"]");
     let text="";
-    for(;text.length<tapeHead;text = text + " ");
+    for(;text.length<config.head;text = text + " ");
     console.log(text+"^");
+}
+
+function configuration(tape,head,state){ //様相のオブジェクト(構造体)
+    this.tape = tape;
+    this.head = head;
+    this.state = state;
 }
 
