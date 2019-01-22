@@ -1,9 +1,3 @@
-function startCalc(){
-    console.log("start");
-    const CSVtext = document.getElementById("StateTransitionText").value;
-    console.log(csv2array(CSVtext));
-}
-
 function csv2array(csvData){
     const lines = csvData.split("\n");
     const csvArray = new Array();
@@ -12,3 +6,9 @@ function csv2array(csvData){
     });
     return csvArray;
 }
+
+const testText =`a,b,c
+d,e,f
+g,h,i`;
+
+console.log( csv2array(testText) );
