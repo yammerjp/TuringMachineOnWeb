@@ -30,6 +30,15 @@ function loadTapeAndTransitionFromHTML(){
     tapeLog.push(Object.assign({},config));
 }
 
+function csv2array(csvData){    //csv形式の文字列を二次元配列に変換
+    const lines = csvData.split("\n");
+    const csvArray = new Array();
+    lines.forEach((line,idx)=>{
+        csvArray[idx]=line.split(",");
+    });
+    return csvArray;
+}
+
 function initializeTuringMachine(tapeOrigin,transition){
     config.tape=`_${tapeOrigin}_`;
     config.head=HEAD_INITIAL_POSITION;
@@ -163,12 +172,4 @@ function printTapeAnimetion(cfg,shift,direction){
     printTape(cfg,shift);
     if(shift!=0)
         window.requestAnimationFrame((ms)=>printTapeAnimetion(cfg,shift,direction)) ;
-}
-function csv2array(csvData){    //csv形式の文字列を二次元配列に変換
-    const lines = csvData.split("\n");
-    const csvArray = new Array();
-    lines.forEach((line,idx)=>{
-        csvArray[idx]=line.split(",");
-    });
-    return csvArray;
 }
