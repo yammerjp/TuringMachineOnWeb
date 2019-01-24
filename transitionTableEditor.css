@@ -1,0 +1,14 @@
+th,td {
+    min-width: 4em;
+    min-height: 1em;
+    border: solid 1px;              /* 枠線指定 */
+}
+ 
+table {
+    border-collapse:  collapse;     /* セルの線を重ねる */
+    text-align: center;
+}
+.editing_cell{
+    display: inline-block;
+    width:4em;
+}
