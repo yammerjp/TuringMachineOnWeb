@@ -3,7 +3,9 @@ th,td {
     min-height: 1em;
     border: solid 1px;              /* 枠線指定 */
 }
- 
+.non-line{
+    border:none;
+} 
 table {
     border-collapse:  collapse;     /* セルの線を重ねる */
     text-align: center;

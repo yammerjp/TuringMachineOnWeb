@@ -5,12 +5,12 @@ const SEEK_DIRECTION_LEFT ="L";     //左への移動
 const SEEK_DIRECTION_RIGHT ="R";    //右への移動
 const SEEK_DIRECTION_STOP ="S";     //移動しない
 
-let tableArray=new Array;
+let tableArray=    [["table"]];
 let editingCell={
     "i":-1,
     "j":-1
 };
-
+/*
 function loadAlphabetsFromHTML(){
     const alphabetsInput = document.getElementById("alphabets").value;
 //    const alphabets=new Array();
@@ -26,7 +26,7 @@ function loadAlphabetsFromHTML(){
 
     printTable(tableArray);
 
-}
+}*/
 function addTableLine(state){
     for(let i=0;i<tableArray[0].length;i++){
         if(i==0){
@@ -143,10 +143,16 @@ function printTable(tableArr){
                 tableHTML=`${tableHTML}<td onclick="editCell(${i},${j});">${content}</td>`;
             }    
         }
+        if(i==0){
+            tableHTML=`${tableHTML}<th class="non-line"><button onclick="addAlphabet();">Add alphabet</button></th>`;
+        }
         tableHTML=tableHTML+`</tr>`;
     }
+    tableHTML=tableHTML+`<tr><td class="non-line"><button onclick="addState();">Add state</button></td></tr>`
     table.innerHTML=tableHTML;
     if(autofocus!=undefined){
         document.getElementById(`cell_${autofocus.i}_${autofocus.j}`).focus();
     }
 }
+
+printTable(tableArray);
