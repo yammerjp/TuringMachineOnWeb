@@ -115,7 +115,7 @@ function completeTable(){
     for(let i=1;i<tableArray.length;i++){
         for(let j=1;j<tableArray[i].length;j++){
             if(tableArray[i][j]!=""){
-                CSVtext=`${CSVtext}<br>\n${tableArray[i][0]},${tableArray[0][j]},${tableArray[i][j]}`
+                CSVtext=`${CSVtext}${tableArray[i][0]},${tableArray[0][j]},${tableArray[i][j]}\n`
             }
         }
     }

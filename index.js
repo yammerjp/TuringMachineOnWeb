@@ -14,6 +14,8 @@ let stateTransitionTable= new Array();
 
 let playingTuringMachine = false;
 
+get2textarea();
+
 function configuration(tape,head,state){ //様相のオブジェクト(構造体)
     this.tape = tape;
     this.head = head;
@@ -172,4 +174,26 @@ function printTapeAnimetion(cfg,shift,direction){
     printTape(cfg,shift);
     if(shift!=0)
         window.requestAnimationFrame((ms)=>printTapeAnimetion(cfg,shift,direction)) ;
+}
+
+function getUrlVars()
+{
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}
+
+function get2textarea(){
+    const getData =getUrlVars();
+    
+    if(getData.completedTransitionCSV!=undefined){
+        const StateTransitionText = document.getElementById("StateTransitionText");
+        StateTransitionText.innerHTML= decodeURIComponent(getData.completedTransitionCSV);
+    }
 }

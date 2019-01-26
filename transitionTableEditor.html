@@ -17,7 +17,10 @@
 
 
 <button onclick="completeTable();">Complete table</button>
-<div id="completedTransitionCSV"></div>
+<div><form name="form" action="index.html" method="get">
+    <textarea readonly="readonly" name="completedTransitionCSV" id="completedTransitionCSV"></textarea>
+    <input type="submit" value="Submit">
+</form></div>
     <script src="transitionTableEditor.js"></script>
     </body>
     </html>
