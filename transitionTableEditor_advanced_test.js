@@ -32,7 +32,7 @@ function addTableLine(state){
         if(i==0){
             tableArray.push([state]);
         }else{
-            tableArray[tableArray.length-1].push("");
+            tableArray[tableArray.length-1].push(["","",""]);
         }
     }
 }
@@ -42,7 +42,7 @@ function addTableColumn(alphabet){
         if(i==0){
             tableArray[i].push(alphabet);
         }else{
-            tableArray[i].push("");
+            tableArray[i].push(["","",""]);
         }
     }
 }
@@ -115,7 +115,8 @@ function completeTable(){
     for(let i=1;i<tableArray.length;i++){
         for(let j=1;j<tableArray[i].length;j++){
             if(tableArray[i][j]!=""){
-                CSVtext=`${CSVtext}${tableArray[i][0]},${tableArray[0][j]},${tableArray[i][j]}\n`
+                CSVtext=`${CSVtext}${tableArray[i][0]},${tableArray[0][j]},`
+                        +`${tableArray[i][j][0]},${tableArray[i][j][1]},${tableArray[i][j][2]}\n`
             }
         }
     }
@@ -125,11 +126,33 @@ function completeTable(){
 function printTable(tableArr){
     const table=document.getElementById("transitionTable");
     let tableHTML="";
-    let autofocus={i:-1,j:-1};
+    let autofocus;
     for(let i=0;i<tableArr.length;i++){
         tableHTML=tableHTML+`<tr>`;
         for(let j=0;j<tableArr[i].length;j++){
-            tableHTML=`${tableHTML}${cellContent(i,j,tableArr[i][j],autofocus)}`;
+            let content;
+            if(i==editingCell.i&&j==editingCell.j){
+                if(i==0||j==0){
+                    content=`<input type='text' class='editing_cell' id='cell_${i}_${j}' value='${tableArray[i][j]}'>`;                    
+                }else{
+                    content=`<input type='text' class='editing_cell' id='cell_${i}_${j}' value='${tableArray[i][j][0]}'>`
+                            +`,<input type='text' class='editing_cell' id='cell_${i}_${j}_1' value='${tableArray[i][j][1]}'>`
+                            +`,<input type='text' class='editing_cell' id='cell_${i}_${j}_2' value='${tableArray[i][j][2]}'>`;    
+                }
+                autofocus={"i":i,"j":j};
+            }else{
+                if(i==0||j==0){
+                    content=tableArr[i][j];
+                }else{
+                    content=`${tableArr[i][j][0]},${tableArr[i][j][1]},${tableArr[i][j][2]}`;
+                }
+            }
+
+            if(i==0){
+                tableHTML=`${tableHTML}<th onclick="editCell(${i},${j});">${content}</th>`;
+            }else{
+                tableHTML=`${tableHTML}<td onclick="editCell(${i},${j});">${content}</td>`;
+            }    
         }
         if(i==0){
             tableHTML=`${tableHTML}<th class="non-line"><button onclick="addAlphabet();">Add alphabet</button></th>`;
@@ -138,29 +161,9 @@ function printTable(tableArr){
     }
     tableHTML=tableHTML+`<tr><td class="non-line"><button onclick="addState();">Add state</button></td></tr>`
     table.innerHTML=tableHTML;
-    if(autofocus.i!=-1){//autofocus.i==0 => autofocus.j==0
+    if(autofocus!=undefined){
         document.getElementById(`cell_${autofocus.i}_${autofocus.j}`).focus();
     }
 }
 
-function cellContent(i,j,cell,autofocus){
-    let content;
-
-
-    if(i==editingCell.i&&j==editingCell.j){
-        content=`<input type='text' class='editing_cell' id='cell_${i}_${j}' value='${cell}'>`;
-        autofocus.i=i;
-        autofocus.j=j;
-    }else{
-        content=cell;
-    }
-
-    if(i==0){
-        return `<th onclick="editCell(${i},${j});">${content}</th>`;
-    }else{
-        return `<td onclick="editCell(${i},${j});">${content}</td>`;
-    }    
-}
-
 printTable(tableArray);
-
