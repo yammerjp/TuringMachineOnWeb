@@ -49,15 +49,21 @@ function addTableColumn(alphabet){
 
 function addState(){
     if(editingCell.i!=-1&&editingCell.j!=-1)
-        editCell(editingCell.i,editingCell.j);
-    addTableLine(`q_${tableArray.length-1}`);
+        if(editCell(editingCell.i,editingCell.j)==-1){
+            editingCell.i=-1;
+            editingCell.j=-1;
+        }
+addTableLine(`q_${tableArray.length-1}`);
     printTable(tableArray);
 }
 
 function addAlphabet(){
     if(editingCell.i!=-1&&editingCell.j!=-1)
-        editCell(editingCell.i,editingCell.j);
-    const alphabets="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        if(editCell(editingCell.i,editingCell.j)==-1){
+            editingCell.i=-1;
+            editingCell.j=-1;
+    }
+const alphabets="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     let newAlphabet;
     for(let i=0;i<alphabets.length;i++){
         if(tableArray[0].indexOf(alphabets[i])==-1){
@@ -74,23 +80,26 @@ function addAlphabet(){
 }
 
 function editCell(i,j){
-    if(i==editingCell.i&&j==editingCell.j){//現在編集中
+    if(editingCell.i==i&&editingCell.j==j){//現在編集中
         const elm=document.getElementById(`cell_${i}_${j}`)
-        if(elm==null)
-            return;
+        if(elm==null){
+            console.log("Error. elm must not be null.");
+            return -2;
+        }
+            
         const value = elm.value;
 
         //アルファベットが、複数文字もしくは重複
         if( i==0&(value.length!=1||(tableArray[0].indexOf(value)!=-1&&value!=tableArray[i][j]))){
             console.log("the alphabet is invalid.");
-            return;
+            return -1;
         }
         //状態名が重複
         if(j==0){
             for(let p=0;p<tableArray.length;p++){
                 if(tableArray[p][0].indexOf(value)!=-1 && value!=tableArray[i][j]){
                     console.log("the state is invalid.");
-                    return;
+                    return -1;
                 }
             }
         }
@@ -106,6 +115,7 @@ function editCell(i,j){
     }
 
     printTable(tableArray);
+    return 0;
 }
 
 function completeTable(){
