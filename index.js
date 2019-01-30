@@ -60,6 +60,14 @@ class TuringMachine{
                                 + this.config.tape.slice(this.config.head+1);   //テープを書き換え
             this.config.head +=seek(transitionLine[4]);//ヘッドを移動
             this.config.state=transitionLine[2];//状態遷移
+
+            //テープ左端又は右端の ALPHABET_BLANK が更新されたとき、テープを継ぎ足す。
+            if(this.config.head==0&&this.config.tape[0]!=ALPHABET_BLANK){
+                this.config.tape=ALPHABET_BLANK+this.config.tape;
+                this.config.head++;
+            }else if(this.config.head==this.config.tape.length-1&&this.config.tape[this.config.tape.length-1]!=ALPHABET_BLANK){
+                this.config.tape=this.config.tape+ALPHABET_BLANK;
+            }
         }else{
             console.log("(!!STOP!!) It is stopped. ");
             this.isWorking = false;
