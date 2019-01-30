@@ -7,6 +7,8 @@ const SEEK_DIRECTION_RIGHT ="R";    //右への移動
 const SEEK_DIRECTION_STOP ="S";     //移動しない
 const ALPHABET_BLANK ="_";
 
+const ADD_TAPE_BLANK = 1;
+
 get2textarea();
 
 class TuringMachine{
@@ -27,7 +29,8 @@ class TuringMachine{
         if(this.isWorking==false)
             return;
         const pastHead = this.config.head;
-        this.transitState();
+        if(this.transitState()==ADD_TAPE_BLANK)
+            pastHead++;
 //        this.printTape2console();
         this.printTape(pastHead);
 
@@ -65,6 +68,7 @@ class TuringMachine{
             if(this.config.head==0&&this.config.tape[0]!=ALPHABET_BLANK){
                 this.config.tape=ALPHABET_BLANK+this.config.tape;
                 this.config.head++;
+                return ADD_TAPE_BLANK;
             }else if(this.config.head==this.config.tape.length-1&&this.config.tape[this.config.tape.length-1]!=ALPHABET_BLANK){
                 this.config.tape=this.config.tape+ALPHABET_BLANK;
             }
