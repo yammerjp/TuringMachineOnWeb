@@ -11,6 +11,5 @@ table {
     text-align: center;
 }
 .editing_cell{
-    display: inline-block;
-    width:4em;
+    background-color: grey;
 }

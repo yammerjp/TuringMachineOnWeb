@@ -1,0 +1,31 @@
+<html>
+    <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>TransitionTableEditor</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Javascriptで作られたTuringMachineSimulatorのための状態遷移表エディター">
+    <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=no">
+<!--    <link rel="shortcut icon" href="media/favicon.ico">-->
+    <link rel="stylesheet" href="transitionTableEditor.css">
+    </head>
+    <body>
+<p>This is transition table editor for TuringMachineSimulator.</p>
+<!--<div>Alphabets:<input type="text" id="alphabets"></div>
+<button onclick="loadAlphabetsFromHTML();">Load Alphabets</button>-->
+<!---->
+(state,alphabet)=>(newState,newAlphabet,seek)
+<div>(<select type="text" id="stateInput" onchange="view.printTable();"></select>,
+    <select type="text" id="alphabetInput" onchange="view.printTable();"></select>)
+ => (<select type="text" id="newStateInput" onchange="view.printTable();"></select>,
+ <select type="text" id="newAlphabetInput" onchange="view.printTable();"></select>,
+ <select type="text" id="seekInput" onchange="view.printTable();"></select>)
+<input type="submit" onclick="view.addNewTransition();"></div>
+
+<table id="transitionTable"></table>
+<table id="seekTable"></table>
+<button onclick="view.submit();">Complete table</button>
+<div id="form"></div>
+<script src="transitionTableEditor2.js"></script>
+
+    </body>
+    </html>
