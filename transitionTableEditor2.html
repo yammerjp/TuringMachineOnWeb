@@ -14,11 +14,11 @@
 <button onclick="loadAlphabetsFromHTML();">Load Alphabets</button>-->
 <!---->
 (state,alphabet)=>(newState,newAlphabet,seek)
-<div>(<select type="text" id="stateInput" onchange="view.printTable();"></select>,
-    <select type="text" id="alphabetInput" onchange="view.printTable();"></select>)
- => (<select type="text" id="newStateInput" onchange="view.printTable();"></select>,
- <select type="text" id="newAlphabetInput" onchange="view.printTable();"></select>,
- <select type="text" id="seekInput" onchange="view.printTable();"></select>)
+<div>(<select type="text" id="stateInput" onchange="view.onChangeSelected();"></select>,
+    <select type="text" id="alphabetInput" onchange="view.onChangeSelected();"></select>)
+ => (<select type="text" id="newStateInput" onchange="view.onChangeSelected();"></select>,
+ <select type="text" id="newAlphabetInput" onchange="view.onChangeSelected();"></select>,
+ <select type="text" id="seekInput" onchange="view.onChangeSelected();"></select>)
 <input type="submit" onclick="view.addNewTransition();"></div>
 
 <table id="transitionTable"></table>

@@ -10,6 +10,6 @@ table {
     border-collapse:  collapse;     /* セルの線を重ねる */
     text-align: center;
 }
-.editing_cell{
+.selected{
     background-color: grey;
 }

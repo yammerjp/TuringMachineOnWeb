@@ -148,6 +148,7 @@ class View{
             seek:""
         }
     }
+
     addNewTransition() {
         if (this.ts.state.arr.length == 0 || this.ts.alphabet.arr.length == 0)
             return -1;
@@ -156,58 +157,67 @@ class View{
         this.ts.rewite(transition);
         this.printTable();
     }
-    setLineAdder(state = "", alphabet = "", newState = "", newAlphabet = "", seek = "") {
-        if (state != "")
-            this.selected.state = state;
-        if (alphabet != "")
-            this.selected.alphabet = alphabet;
-        if (newState != "")
-            this.selected.newState = newState;
-        if (newAlphabet != "")
-            this.selected.newAlphabet = newAlphabet;
-        if (seek != "")
-            this.selected.seek = seek;
-        
-        this.printLineAdder(this.selected);
+
+    onChangeSelected() {
+        this.selected.state = this.state.value;
+        this.selected.alphabet = this.alphabet.value;
+        this.selected.newState = this.newState.value;
+        this.selected.newAlphabet = this.newAlphabet.value;
+        this.seek.state = this.seek.value;
+        this.printTable();
+        this.printSeekTable();
     }
-    printLineAdder(sld) {
+    onStateClicked(newState) {
+        this.selected.newState = newState;
+        this.print();
+    }
+    onAlphabetClicked(newAlphabet) {
+        this.selected.newAlphabet = newAlphabet;
+        this.print();
+    }
+    onCellClicked(state, alphabet) {
+        this.selected.state = state;
+        this.selected.alphabet = alphabet;
+        this.print();
+    }
+    onSeekClicked(seek) {
+        this.selected.seek = seek;
+        this.print();
+    }
+
+    addAlphabet(){
+//        const alphabets="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const alphabets = "01XAB_23456789abcdefghijklmnopqrstuvwxyzCDEFGHIJKLMNOPQRSTUVWYZ";  
+        this.ts.alphabet.add(alphabets[this.ts.alphabet.arr.length]);
+        this.print();
+    }
+    addState(){
+        this.ts.state.add(`q_${this.ts.state.arr.length}`);
+        this.print();
+    }
+
+    printLineAdder() {
         const optionPrint = function (str = "") {
             return function (elm) {
                 return `<option value="${elm}"${(elm == str) ? ' selected ' : ''}>${elm}</option>\n`;
             };
         };
-        if (sld == undefined)
-            sld = this.selected;
-        this.state.innerHTML = this.ts.state.toString(optionPrint(sld.state));
-        this.alphabet.innerHTML = this.ts.alphabet.toString(optionPrint(sld.alphabet));
-        this.newState.innerHTML = this.ts.state.toStringWithSpetialState(optionPrint(sld.newState));
-        this.newAlphabet.innerHTML = this.ts.alphabet.toString(optionPrint(sld.newAlphabet));
-        this.seek.innerHTML = this.ts.seek.toString(optionPrint(sld.seek));
-
-        this.printTable();
-    }
-    addAlphabet(){
-//        const alphabets="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        const alphabets = "01XAB_23456789abcdefghijklmnopqrstuvwxyzCDEFGHIJKLMNOPQRSTUVWYZ";  
-        this.ts.alphabet.add(alphabets[this.ts.alphabet.arr.length]);
-        this.printLineAdder();
-        this.printTable();
-    }
-    addState(){
-        this.ts.state.add(`q_${this.ts.state.arr.length}`);
-        this.printLineAdder();
-        this.printTable();
+        this.state.innerHTML = this.ts.state.toString(optionPrint(this.selected.state));
+        this.alphabet.innerHTML = this.ts.alphabet.toString(optionPrint(this.selected.alphabet));
+        this.newState.innerHTML = this.ts.state.toStringWithSpetialState(optionPrint(this.selected.newState));
+        this.newAlphabet.innerHTML = this.ts.alphabet.toString(optionPrint(this.selected.newAlphabet));
+        this.seek.innerHTML = this.ts.seek.toString(optionPrint(this.selected.seek));
     }
     printTable(){
         //1行目
         let str = "<tr><th>state＼alphabet</th>" + this.ts.alphabet.toString((alphabet) => {
-            return `<th onclick="view.setLineAdder('','','','${alphabet}');" ${(alphabet==this.newAlphabet.value)?'class="editing_cell"':''}>${alphabet}</th>`;
+            return `<th onclick="view.onAlphabetClicked('${alphabet}');" ${(alphabet==this.newAlphabet.value)?'class="selected"':''}>${alphabet}</th>`;
         }) + '<th class="non-line"><button onclick="view.addAlphabet();">Add alphabet</button></th></tr>';
         //2~最終前行
         this.ts.state.arr.forEach((state) => {
-            str += `<tr><td onclick="view.setLineAdder('','','${state}');"  ${(state==this.newState.value)?'class="editing_cell"':''}>${state}</td>`;
+            str += `<tr><td onclick="view.onStateClicked('${state}');"  ${(state==this.newState.value)?'class="selected"':''}>${state}</td>`;
             this.ts.alphabet.arr.forEach((alphabet) => { 
-                str += `<td onclick="view.setLineAdder('${state}','${alphabet}');"  ${(alphabet==this.alphabet.value&&state==this.state.value)?'class="editing_cell"':''}>`;
+                str += `<td onclick="view.onCellClicked('${state}','${alphabet}');"  ${(alphabet==this.alphabet.value&&state==this.state.value)?'class="selected"':''}>`;
                 const transition = this.ts.find(state, alphabet);
                 if (transition != undefined) { 
                     str += `${transition.newState},${transition.newAlphabet},${transition.seek}`;
@@ -221,6 +231,16 @@ class View{
 
         const element = document.getElementById("transitionTable");
         element.innerHTML = str;
+    }
+    printSeekTable() { 
+        const element = document.getElementById("seekTable");
+        element.innerHTML = "<tr>" + this.ts.seek.toString((seek) => {
+            return `<td onclick="view.onSeekClicked('${seek}');" ${(seek==this.seek.value)?'class="selected"':''}>${seek}</td>`;
+        }) +"</tr>";
+    }
+    print() {
+        this.printLineAdder();
+        this.printTable();
         this.printSeekTable();
     }
     submit(){
@@ -236,15 +256,9 @@ class View{
         document.getElementById('form').appendChild(form);
         form.submit();
     }
-    printSeekTable() { 
-        const element = document.getElementById("seekTable");
-        element.innerHTML = "<tr>" + this.ts.seek.toString((seek) => {
-            return `<td onclick="view.setLineAdder('','','','','${seek}');" ${(seek==this.seek.value)?'class="editing_cell"':''}>${seek}</td>`;
-        }) +"</tr>";
-    }
 }
 
 const view= new View();
-view.printTable();
+view.print();
 
 
