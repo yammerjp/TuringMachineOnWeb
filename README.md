@@ -36,7 +36,8 @@ This is [turing machine](https://en.wikipedia.org/wiki/Turing_machine) emulator 
 - [add state],[add alphabet]より状態遷移表の行、列を追加。
 - 書き込みたいセルをクリックして、遷移前の状態とアルファベットを指定する
 - 行ラベル、列ラベルをそれぞれクリックして、遷移したい状態とアルファベットを指定する
-- テープの移動方向をL(左),S(停止),R(右)から選択してクリックする。クリックすると遷移前後の状態とアルファベットも決定し書き込まれる。
+- テープの移動方向をL(左),S(停止),R(右)から選択してクリックする。
+- [Add to Table]をクリックすると遷移前後の状態/アルファベットとテープの移動方向が決定し表に書き込まれる。
 - 状態遷移表が完成したら、[Complete table]を押してチューリング機械を動かすページに遷移する。遷移先では作成した状態遷移表がセットされた状態になっている。
 
 ### チューリング機械([machine.html](https://basd4g.github.io/TuringMachineOnWeb/machine.html))

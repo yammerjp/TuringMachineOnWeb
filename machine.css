@@ -5,3 +5,6 @@ textarea{
 button{
     border: solid 1px;              /* 枠線指定 */
 }
+body{
+  background-color:#dddddd;
+}
