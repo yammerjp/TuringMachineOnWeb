@@ -9,18 +9,23 @@
     <link rel="stylesheet" href="transitionTableEditor.css">
     </head>
     <body>
-
 <p>This is transition table editor for TuringMachineSimulator.</p>
 <!--<div>Alphabets:<input type="text" id="alphabets"></div>
 <button onclick="loadAlphabetsFromHTML();">Load Alphabets</button>-->
+<!---->
+(state,alphabet)=>(newState,newAlphabet,seek)
+<div>(<select type="text" id="stateInput" onchange="view.printTable();"></select>,
+    <select type="text" id="alphabetInput" onchange="view.printTable();"></select>)
+ => (<select type="text" id="newStateInput" onchange="view.printTable();"></select>,
+ <select type="text" id="newAlphabetInput" onchange="view.printTable();"></select>,
+ <select type="text" id="seekInput" onchange="view.printTable();"></select>)
+<input type="submit" onclick="view.addNewTransition();"></div>
+
 <table id="transitionTable"></table>
+<table id="seekTable"></table>
+<button onclick="view.submit();">Complete table</button>
+<div id="form"></div>
+<script src="transitionTableEditor.js"></script>
 
-
-<button onclick="completeTable();">Complete table</button>
-<div><form name="form" action="index.html" method="get">
-    <textarea readonly="readonly" name="completedTransitionCSV" id="completedTransitionCSV"></textarea>
-    <input type="submit" value="Submit">
-</form></div>
-    <script src="transitionTableEditor.js"></script>
     </body>
     </html>
