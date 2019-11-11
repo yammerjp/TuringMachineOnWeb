@@ -14,5 +14,5 @@ table {
     background-color: grey;
 }
 button{
-  background-color: gray;
+    border: solid 1px;              /* 枠線指定 */
 }
