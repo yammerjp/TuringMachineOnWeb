@@ -20,7 +20,7 @@ This is [turing machine](https://en.wikipedia.org/wiki/Turing_machine) emulator 
 
 ## とりあえず動かす
 
-[machine.html](https://basd4g.github.io/TuringMachineOnWeb/machine.html)へアクセスし、[Next]を何度かクリックする。
+[machine.html](https://basd4g.github.io/TuringMachineOnWeb/machine.html)へアクセスし、[Load]を一回クリックしたあと、[Next]を何度かクリックする。
 
 すると、テープヘッドが移動しながらテープが書き換えられていることがわかる。
 
