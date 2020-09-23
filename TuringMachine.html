@@ -1,0 +1,47 @@
+<html>
+    <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>TuringMachineSimulator</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Javascriptで作られたTuringMachineSimulator">
+    <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=no">
+    <link rel="stylesheet" href="index.css">
+<!--    <link rel="shortcut icon" href="media/favicon.ico">-->
+    </head>
+    <body>
+
+<p>This is TuringMachineSimulator.</p>
+<div>first tape:<input type="text" id="tapeText" value="0101"></div>
+<div>state transition(like CSV):</div>
+<div>[ 状態 , テープヘッドの値 , 遷移先の状態 , 書き換える値 , ヘッドの移動先 ]</div>
+<div><textarea id="StateTransitionText">q_0,0,q_1,A,L
+q_0,1,q_0,1,R
+q_0,A,q_0,A,R
+q_0,B,q_0,B,R
+q_0,_,q_4,_,L
+q_1,1,q_1,1,L
+q_1,A,q_1,A,L
+q_1,B,q_1,B,L
+q_1,_,q_2,_,R
+q_2,0,q_2,0,R
+q_2,1,q_3,B,L
+q_2,A,q_2,A,R
+q_2,B,q_2,B,R
+q_2,_,q_reject,_,S
+q_3,0,q_3,0,L
+q_3,A,q_3,A,L
+q_3,B,q_3,B,L
+q_3,_,q_0,_,R
+q_4,1,q_reject,1,S
+q_4,A,q_4,A,L
+q_4,B,q_4,B,L
+q_4,_,q_accept,_,S</textarea></div>
+<button onclick="loadTapeAndTransitionFromHTML();">Load</button>
+<button onclick="TM.nextStep();">Next</button>
+<!--<button onclick="startCalc();">start</button>-->
+
+<div><canvas id="turingMachineCanvas" width="600px" height="300px"></canvas></div>
+<script src="Transitions.js"></script>
+    <script src="TuringMachine.js"></script>
+    </body>
+    </html>
