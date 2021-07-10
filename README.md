@@ -20,7 +20,7 @@ This is [turing machine](https://en.wikipedia.org/wiki/Turing_machine) emulator 
 
 ## とりあえず動かす
 
-[machine.html](https://basd4g.github.io/TuringMachineOnWeb/machine.html)へアクセスし、[Load]を一回クリックしたあと、[Next]を何度かクリックする。
+[machine.html](https:/yammerjp.github.io/TuringMachineOnWeb/machine.html)へアクセスし、[Load]を一回クリックしたあと、[Next]を何度かクリックする。
 
 すると、テープヘッドが移動しながらテープが書き換えられていることがわかる。
 
@@ -29,7 +29,7 @@ This is [turing machine](https://en.wikipedia.org/wiki/Turing_machine) emulator 
 
 ## 使い方
 
-### 状態遷移表エディタ([transitionTableEditor.html](https://basd4g.github.io/TuringMachineOnWeb/transitionTableEditor.html))
+### 状態遷移表エディタ([transitionTableEditor.html](https://yammerjp.github.io/TuringMachineOnWeb/transitionTableEditor.html))
 
 状態遷移表の列ラベルの状態、行ラベルのアルファベットのとき、どの状態/アルファベット/テープ位置に遷移するかを表のセルに書き込む。
 
@@ -40,7 +40,7 @@ This is [turing machine](https://en.wikipedia.org/wiki/Turing_machine) emulator 
 - [Add to Table]をクリックすると遷移前後の状態/アルファベットとテープの移動方向が決定し表に書き込まれる。
 - 状態遷移表が完成したら、[Complete table]を押してチューリング機械を動かすページに遷移する。遷移先では作成した状態遷移表がセットされた状態になっている。
 
-### チューリング機械([machine.html](https://basd4g.github.io/TuringMachineOnWeb/machine.html))
+### チューリング機械([machine.html](https://yammerjp.github.io/TuringMachineOnWeb/machine.html))
 
 - first tape を編集して初期状態のテープヘッドを指定する。
 - テキストエリアに状態遷移表を書き込む(予め一例の表ないしは直前に作成した表が記入されている)
